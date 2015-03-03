@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>2.用js实现无缝滚动效果</title>
+<style type="text/css">
+.wrapper{
+	width: 400px;
+	height: 300px;
+	border: 10px solid #ddd;
+	margin: 50px auto;
+}
+.wrapper .content-title{
+	width: 100%;
+	height: 100px;
+	background-color: #f05e6f;
+	color: #fff;
+}
+.content-title h3{
+	width: 70%;
+	height: 100px;
+	line-height: 100px;
+	font-size: 28px;
+	margin-top: 0;
+	padding: 5px 30px;
+	display: inline-block;
+}
+.content-title a{
+	width: 20%;
+	font-size: 12px;
+	color: #fff;
+	text-decoration: none;
+}
+.wrapper #content-body{
+	width: 100%;
+	height: 200px;
+	overflow: hidden;
+}
+.wrapper #content-body ul{
+	list-style: none;
+	padding-left: 5px;
+}
+#content-body ul li{
+	font-size: 18px;
+	font-weight: bold;
+	margin: 10px 5px;
+}
+#content-body ul li:hover{
+	color: #f00;
+}
+</style>
+</head>
+<body>
+	<div class="wrapper">
+		<div class="content-title">
+			<h3>数码周边</h3>
+			<a href="#">更多>></a>
+		</div>
+		<div id="content-body">
+			<ul id="box1">
+				<li>1.苹果最新旗舰机iPhone6 Plus仅售￥1999！</li>
+				<li>2.小米Note 仅售￥999</li>
+				<li>3.华为P7</li>
+				<li>4.魅族4 Pro</li>
+				<li>5.三星Galaxy Note4</li>
+				<li>6.索尼z4</li>
+				<li>7.vivo xplay</li>
+				<li>8.诺基亚 Lumia1020</li>
+				<li>9.HTC one（M9）</li>
+			</ul>
+			<ul id="box2"></ul>
+		</div>
+	</div>
+
+<script type="text/javascript">
+	//1.获取文字滚动区域的节点
+	var area = document.getElementById('content-body');
+	var box1 = document.getElementById('box1');
+	var box2 = document.getElementById('box2');
+
+	//2.利用innerHTML来将box1克隆到box2
+	box2.innerHTML = box1.innerHTML;
+
+	//3.设置滚动的间隔时间,单位为毫秒
+	var speed = 50;
+
+
+	function scrollUp () {
+		if(area.scrollTop >= box1.scrollHeight){//4.当滚动区域超过文字内容区域时，重制box1位置
+			//设置滚动的方向和初始值
+			area.scrollTop = 0;
+		}else{//5.若滚动区域还没超过文字内容区域，则继续自增长；
+			area.scrollTop++;
+		}
+	}
+
+	//6.设置计时器setInterval(fn,speed);
+	var myScroll = setInterval("scrollUp()",speed);
+
+	//7.增加鼠标移入滚动停止，移出继续滚动的效果
+	area.onmouseover = function(){
+		clearInterval(myScroll);//清除计时器
+	}
+
+	area.onmouseout = function(){
+		myScroll = setInterval("scrollUp()",speed);//重新激活计时器
+	}
+
+
+</script>
+</body>
+</html>
