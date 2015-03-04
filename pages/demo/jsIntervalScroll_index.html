@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>2.利用js实现间歇性文字滚动效果</title>
+<style type="text/css">
+.wrapper{
+	width: 400px;
+	border: 10px solid #ddd;
+	margin: 50px auto;
+}
+.wrapper .content-title{
+	width: 100%;
+	height: 100px;
+	background-color: #f05e6f;
+	color: #fff;
+}
+.content-title h3{
+	width: 70%;
+	height: 100px;
+	line-height: 100px;
+	font-size: 28px;
+	margin-top: 0;
+	padding: 5px 30px;
+	display: inline-block;
+}
+.content-title a{
+	width: 20%;
+	font-size: 12px;
+	color: #fff;
+	text-decoration: none;
+}
+.wrapper #content-body{
+	width: 100%;
+	height: 170px;
+	overflow: hidden;
+	margin: 15px 0;
+}
+.wrapper #content-body ul{
+	list-style: none;
+	padding-left: 5px;
+	margin: 0;
+}
+#content-body ul li{
+	font-size: 16px;
+	font-weight: bold;
+	height: 24px;
+}
+#content-body ul li:hover{
+	color: #f00;
+}
+</style>
+</head>
+<body>
+	<div class="wrapper">
+		<div class="content-title">
+			<h3>数码周边</h3>
+			<a href="#">更多>></a>
+		</div>
+		<div id="content-body">
+			<ul id="box1">
+				<li>1.苹果最新旗舰机iPhone6 Plus仅售￥1999！</li>
+				<li>2.小米Note 仅售￥999</li>
+				<li>3.华为P7</li>
+				<li>4.魅族4 Pro</li>
+				<li>5.三星Galaxy Note4</li>
+				<li>6.索尼z4</li>
+				<li>7.vivo xplay</li>
+				<li>8.诺基亚 Lumia1020</li>
+				<li>9.HTC one（M9）</li>
+			</ul>
+		</div>
+	</div>
+
+
+<script type="text/javascript">
+	var area = document.getElementById('content-body');
+	var itemHeight = 24;//滚动高度，滚动一行的高度相当于每个li的行高
+	area.innerHTML += area.innerHTML;//克隆自己，使其一直处于滚动状态
+	area.scrollTop = 0;
+	var speed = 50;//滚动速度
+	var delay = 2000;//延迟时间
+	var time;
+
+	function startMove(){
+		area.scrollTop++;
+		time = setInterval('scrollUp()',speed);
+	}
+
+	function scrollUp(){
+		if(area.scrollTop % itemHeight ==0){//每当滚动一行时，延迟显示2秒
+			clearInterval(time);
+			setTimeout('startMove()',delay);//延迟函数，用法:setTimeout(函数或表达式，延迟时间)
+		}else{
+			area.scrollTop++;
+			if(area.scrollTop >= area.scrollHeight/2){
+				area.scrollTop = 0;
+			}
+		}
+	}
+
+	setTimeout('startMove()',delay);//页面加载时，2秒后开始滚动
+	
+
+
+
+</script>
+</body>
+</html>
